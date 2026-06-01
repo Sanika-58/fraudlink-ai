@@ -26,62 +26,13 @@ export interface Cycle {
 }
 
 export const accounts: Account[] = [
-  {
-    id: "A123",
-    riskScore: 95.1,
-    action: "FREEZE",
-    flags: ["Cycle origin", "Round-trip receiver", "Smurfing source"],
-    x: 120,
-    y: 300,
-  },
-  {
-    id: "B456",
-    riskScore: 78.3,
-    action: "ESCALATE",
-    flags: ["Layering node", "Pass-through mule"],
-    x: 320,
-    y: 150,
-  },
-  {
-    id: "C789",
-    riskScore: 88.6,
-    action: "FREEZE",
-    flags: ["Cycle node", "Dual feed receiver"],
-    x: 560,
-    y: 150,
-  },
-  {
-    id: "D012",
-    riskScore: 81.2,
-    action: "ESCALATE",
-    flags: ["Cycle node", "Return leg"],
-    x: 760,
-    y: 300,
-  },
-  {
-    id: "E345",
-    riskScore: 74.9,
-    action: "ESCALATE",
-    flags: ["Smurfing splitter", "High velocity"],
-    x: 320,
-    y: 450,
-  },
-  {
-    id: "F678",
-    riskScore: 52.4,
-    action: "MONITOR",
-    flags: ["Smurf leg mule"],
-    x: 560,
-    y: 350,
-  },
-  {
-    id: "G901",
-    riskScore: 50.7,
-    action: "MONITOR",
-    flags: ["Smurf leg mule"],
-    x: 560,
-    y: 550,
-  },
+  { id: "A123", riskScore: 95.1, action: "FREEZE", flags: ["Cycle origin", "Round-trip receiver", "Smurfing source"], x: 300, y: 80 },
+  { id: "B456", riskScore: 78.3, action: "ESCALATE", flags: ["Layering node", "Pass-through mule"], x: 150, y: 220 },
+  { id: "C789", riskScore: 88.6, action: "FREEZE", flags: ["Cycle node", "Dual feed receiver"], x: 430, y: 220 },
+  { id: "D012", riskScore: 81.2, action: "ESCALATE", flags: ["Cycle node", "Return leg"], x: 560, y: 380 },
+  { id: "E345", riskScore: 74.9, action: "ESCALATE", flags: ["Smurfing splitter", "High velocity"], x: 150, y: 380 },
+  { id: "F678", riskScore: 52.4, action: "MONITOR", flags: ["Smurf leg mule"], x: 300, y: 320 },
+  { id: "G901", riskScore: 50.7, action: "MONITOR", flags: ["Smurf leg mule"], x: 300, y: 480 },
 ]
 
 export const transactions: Transaction[] = [
