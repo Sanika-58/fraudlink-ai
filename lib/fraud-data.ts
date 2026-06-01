@@ -6,6 +6,7 @@ export interface Account {
   riskScore: number
   action: Action
   flags: string[]
+  /** layout position on the 1000x680 graph canvas */
   x: number
   y: number
 }
@@ -26,25 +27,74 @@ export interface Cycle {
 }
 
 export const accounts: Account[] = [
-  { id: "A123", riskScore: 95.1, action: "FREEZE", flags: ["Cycle origin", "Round-trip receiver", "Smurfing source"], x: 300, y: 80 },
-  { id: "B456", riskScore: 78.3, action: "ESCALATE", flags: ["Layering node", "Pass-through mule"], x: 150, y: 220 },
-  { id: "C789", riskScore: 88.6, action: "FREEZE", flags: ["Cycle node", "Dual feed receiver"], x: 430, y: 220 },
-  { id: "D012", riskScore: 81.2, action: "ESCALATE", flags: ["Cycle node", "Return leg"], x: 560, y: 380 },
-  { id: "E345", riskScore: 74.9, action: "ESCALATE", flags: ["Smurfing splitter", "High velocity"], x: 150, y: 380 },
-  { id: "F678", riskScore: 52.4, action: "MONITOR", flags: ["Smurf leg mule"], x: 300, y: 320 },
-  { id: "G901", riskScore: 50.7, action: "MONITOR", flags: ["Smurf leg mule"], x: 300, y: 480 },
+  {
+    id: "A123",
+    riskScore: 95.1,
+    action: "FREEZE",
+    flags: ["Cycle origin", "Round-trip receiver", "Smurfing source"],
+    x: 500,
+    y: 90,
+  },
+  {
+    id: "B456",
+    riskScore: 78.3,
+    action: "ESCALATE",
+    flags: ["Layering node", "Pass-through mule"],
+    x: 840,
+    y: 250,
+  },
+  {
+    id: "C789",
+    riskScore: 88.6,
+    action: "FREEZE",
+    flags: ["Cycle node", "Dual feed receiver"],
+    x: 660,
+    y: 560,
+  },
+  {
+    id: "D012",
+    riskScore: 81.2,
+    action: "ESCALATE",
+    flags: ["Cycle node", "Return leg"],
+    x: 230,
+    y: 470,
+  },
+  {
+    id: "E345",
+    riskScore: 74.9,
+    action: "ESCALATE",
+    flags: ["Smurfing splitter", "High velocity"],
+    x: 250,
+    y: 180,
+  },
+  {
+    id: "F678",
+    riskScore: 52.4,
+    action: "MONITOR",
+    flags: ["Smurf leg mule"],
+    x: 360,
+    y: 360,
+  },
+  {
+    id: "G901",
+    riskScore: 50.7,
+    action: "MONITOR",
+    flags: ["Smurf leg mule"],
+    x: 540,
+    y: 330,
+  },
 ]
 
 export const transactions: Transaction[] = [
-  { from: "A123", to: "B456", amount: 980000,  date: "Jan 3, 09:12" },
-  { from: "B456", to: "C789", amount: 960000,  date: "Jan 3, 11:40" },
-  { from: "C789", to: "D012", amount: 945000,  date: "Jan 4, 08:05" },
-  { from: "D012", to: "A123", amount: 920000,  date: "Jan 4, 14:22" },
-  { from: "A123", to: "E345", amount: 450000,  date: "Jan 5, 10:00" },
-  { from: "E345", to: "F678", amount: 225000,  date: "Jan 5, 10:14" },
-  { from: "E345", to: "G901", amount: 220000,  date: "Jan 5, 10:18" },
-  { from: "F678", to: "C789", amount: 210000,  date: "Jan 6, 09:30" },
-  { from: "G901", to: "C789", amount: 205000,  date: "Jan 6, 09:33" },
+  { from: "A123", to: "B456", amount: 980000, date: "Jan 3, 09:12" },
+  { from: "B456", to: "C789", amount: 960000, date: "Jan 3, 11:40" },
+  { from: "C789", to: "D012", amount: 945000, date: "Jan 4, 08:05" },
+  { from: "D012", to: "A123", amount: 920000, date: "Jan 4, 14:22" },
+  { from: "A123", to: "E345", amount: 450000, date: "Jan 5, 10:00" },
+  { from: "E345", to: "F678", amount: 225000, date: "Jan 5, 10:14" },
+  { from: "E345", to: "G901", amount: 220000, date: "Jan 5, 10:18" },
+  { from: "F678", to: "C789", amount: 210000, date: "Jan 6, 09:30" },
+  { from: "G901", to: "C789", amount: 205000, date: "Jan 6, 09:33" },
 ]
 
 export const cycles: Cycle[] = [
@@ -84,56 +134,56 @@ export const complianceAlerts: ComplianceAlert[] = [
   {
     id: "alert-1",
     code: "PMLA",
-    title: "Circular flow exceeds PMLA reporting threshold",
+    title: "Circular flow exceeds reporting threshold",
     description:
-      "A123 initiates a round-trip loop through B456, C789, D012 and back to A123, recirculating over ₹38L. Breaches PMLA 2002. STR to FIU-IND required.",
+      "Round-trip loop A123 to B456 to C789 to D012 circulated ₹38,05,000, breaching PMLA 2002 limits. STR to FIU-IND required.",
     severity: "CRITICAL",
     account: "A123",
   },
   {
     id: "alert-2",
-    code: "STR",
-    title: "Smurfing detected at A123",
+    code: "CTR",
+    title: "Structuring signature detected",
     description:
-      "A123 split ₹4.5L into two sub-₹10L transfers to E345 within 18 minutes on Jan 5 (10:00, 10:14, 10:18). Classic structuring to avoid CTR threshold.",
+      "Four transactions clustered between ₹9.2L and ₹9.8L, each just under the ₹10L CTR threshold. Classic structuring.",
     severity: "CRITICAL",
-    account: "A123",
+    account: "C789",
   },
   {
     id: "alert-3",
     code: "STR",
-    title: "Dual smurf feedback loops via E345",
+    title: "Smurfing velocity anomaly",
     description:
-      "E345 received ₹4.5L from A123 and split into F678 (₹2.25L) and G901 (₹2.20L) within 18 minutes. Both legs feed back into C789, forming two parallel feedback loops.",
+      "E345 split ₹4.5L into ₹2.25L and ₹2.20L legs within 4 minutes, re-converging at C789. File suspicious transaction report.",
     severity: "HIGH",
     account: "E345",
   },
   {
     id: "alert-4",
     code: "KYC",
-    title: "C789 convergence hub — dual feed receiver",
+    title: "Shell account suspected",
     description:
-      "C789 receives funds from three separate paths: B456, F678, and G901. Acts as a convergence hub masking the original source of funds.",
+      "D012 closes the return leg of the primary cycle. Account age and KYC re-verification recommended.",
     severity: "HIGH",
-    account: "C789",
+    account: "D012",
   },
   {
     id: "alert-5",
-    code: "STR",
-    title: "Zero-retention mule behavior at F678 and G901",
+    code: "KYC",
+    title: "Mule pass-through pattern",
     description:
-      "F678 and G901 each forwarded nearly 100% of received value to C789 within hours of receipt. Classic money-mule pass-through with negligible balance retention.",
+      "B456 acts as a high-value pass-through relay with near-zero retained balance. Review counterparties.",
     severity: "MEDIUM",
-    account: "F678",
+    account: "B456",
   },
   {
     id: "alert-6",
-    code: "KYC",
-    title: "D012 return leg — round-trip completer",
+    code: "STR",
+    title: "Convergence hub flagged",
     description:
-      "D012 received ₹9.45L from C789 and returned ₹9.20L to A123 the same day, completing the round-trip loop. Verify identity and source of funds.",
+      "C789 receives from three independent legs (D-feed, F-leg, G-leg). Dual-feed receiver behavior.",
     severity: "MEDIUM",
-    account: "D012",
+    account: "C789",
   },
 ]
 
@@ -185,6 +235,7 @@ export function txFor(id: string): { incoming: Transaction[]; outgoing: Transact
   }
 }
 
+/** Build adjacency list for traversal algorithms. */
 export function adjacency(): Record<string, string[]> {
   const adj: Record<string, string[]> = {}
   for (const a of accounts) adj[a.id] = []
@@ -192,6 +243,7 @@ export function adjacency(): Record<string, string[]> {
   return adj
 }
 
+/** BFS layering — returns ordered list of nodes by discovery + depth map. */
 export function bfsOrder(seed: string): { order: string[]; depth: Record<string, number> } {
   const adj = adjacency()
   const depth: Record<string, number> = { [seed]: 0 }
@@ -210,6 +262,7 @@ export function bfsOrder(seed: string): { order: string[]; depth: Record<string,
   return { order, depth }
 }
 
+/** DFS — returns the first traversal order discovered from seed. */
 export function dfsOrder(seed: string): string[] {
   const adj = adjacency()
   const visited = new Set<string>()
@@ -226,6 +279,7 @@ export function dfsOrder(seed: string): string[] {
   return order
 }
 
+/** Longest simple suspicious path from a seed (used for the path tracer). */
 export function longestPath(seed: string): string[] {
   const adj = adjacency()
   let best: string[] = [seed]
@@ -245,10 +299,8 @@ export function longestPath(seed: string): string[] {
 
 export function detectPattern(path: string[]): string {
   if (path.length >= 2 && path[0] === path[path.length - 1]) return "Round-trip"
-  const hasMule = path.some((id) => id.startsWith("E") || id.startsWith("F") || id.startsWith("G"))
-  const hasProxy = path.some((id) => id.startsWith("B") || id.startsWith("C") || id.startsWith("D"))
-  if (hasMule && hasProxy) return "Layering"
-  if (hasMule) return "Smurfing"
+  const hasSmurf = path.some((id) => ["E345", "F678", "G901"].includes(id))
+  if (hasSmurf) return "Smurfing"
   return "Layering"
 }
 
@@ -261,6 +313,10 @@ export function pathVolume(path: string[]): number {
   return total
 }
 
+/**
+ * Branch & Bound investigation planner: greedily select up to `budget`
+ * accounts that maximize fraud exposure (risk-weighted volume coverage).
+ */
 export interface PlanStep {
   account: string
   marginalExposure: number
@@ -272,12 +328,14 @@ export function investigationPlan(budget: number): {
   exposure: number
   yieldScore: number
 } {
+  // exposure contribution per account = volume routed through it
   const routed: Record<string, number> = {}
   for (const a of accounts) routed[a.id] = 0
   for (const t of transactions) {
     routed[t.from] += t.amount
     routed[t.to] += t.amount
   }
+  // weight by risk score, branch & bound prunes low-yield leaves
   const ranked = [...accounts].sort(
     (a, b) => routed[b.id] * b.riskScore - routed[a.id] * a.riskScore,
   )
