@@ -6,7 +6,6 @@ export interface Account {
   riskScore: number
   action: Action
   flags: string[]
-  /** layout position on the 1000x680 graph canvas */
   x: number
   y: number
 }
@@ -28,131 +27,96 @@ export interface Cycle {
 
 export const accounts: Account[] = [
   {
-    id: "SHELL01",
-    riskScore: 97.2,
+    id: "A123",
+    riskScore: 95.1,
     action: "FREEZE",
-    flags: ["Shell company", "Cycle controller", "High velocity"],
+    flags: ["Cycle origin", "Round-trip receiver", "Smurfing source"],
     x: 120,
-    y: 130,
-  },
-  {
-    id: "SHELL02",
-    riskScore: 93.4,
-    action: "FREEZE",
-    flags: ["Shell company", "Round-trip node"],
-    x: 720,
     y: 300,
   },
   {
-    id: "SHELL03",
-    riskScore: 89.1,
+    id: "B456",
+    riskScore: 78.3,
+    action: "ESCALATE",
+    flags: ["Layering node", "Pass-through mule"],
+    x: 320,
+    y: 150,
+  },
+  {
+    id: "C789",
+    riskScore: 88.6,
     action: "FREEZE",
-    flags: ["Shell company", "Convergence hub"],
-    x: 880,
-    y: 200,
+    flags: ["Cycle node", "Dual feed receiver"],
+    x: 560,
+    y: 150,
   },
   {
-    id: "MULE01",
-    riskScore: 72.6,
+    id: "D012",
+    riskScore: 81.2,
     action: "ESCALATE",
-    flags: ["Mule account", "Zero retention"],
-    x: 330,
-    y: 80,
+    flags: ["Cycle node", "Return leg"],
+    x: 760,
+    y: 300,
   },
   {
-    id: "MULE02",
-    riskScore: 70.1,
+    id: "E345",
+    riskScore: 74.9,
     action: "ESCALATE",
-    flags: ["Mule account", "Zero retention"],
-    x: 330,
-    y: 230,
+    flags: ["Smurfing splitter", "High velocity"],
+    x: 320,
+    y: 450,
   },
   {
-    id: "MULE03",
-    riskScore: 68.4,
-    action: "ESCALATE",
-    flags: ["Mule account", "Zero retention"],
-    x: 330,
-    y: 380,
-  },
-  {
-    id: "MULE04",
-    riskScore: 66.9,
-    action: "ESCALATE",
-    flags: ["Mule account", "Zero retention"],
-    x: 330,
-    y: 530,
-  },
-  {
-    id: "PROXY01",
-    riskScore: 55.3,
+    id: "F678",
+    riskScore: 52.4,
     action: "MONITOR",
-    flags: ["Proxy node", "Layering assist"],
-    x: 530,
-    y: 180,
+    flags: ["Smurf leg mule"],
+    x: 560,
+    y: 350,
   },
   {
-    id: "PROXY02",
-    riskScore: 53.8,
+    id: "G901",
+    riskScore: 50.7,
     action: "MONITOR",
-    flags: ["Proxy node", "Layering assist"],
-    x: 530,
-    y: 440,
-  },
-  {
-    id: "EXIT01",
-    riskScore: 61.2,
-    action: "MONITOR",
-    flags: ["Cash-out node", "Suspected final beneficiary"],
-    x: 890,
-    y: 540,
+    flags: ["Smurf leg mule"],
+    x: 560,
+    y: 550,
   },
 ]
 
 export const transactions: Transaction[] = [
-  { from: "SHELL01", to: "MULE01", amount: 1950000, date: "Feb 1, 08:00" },
-  { from: "SHELL01", to: "MULE02", amount: 1920000, date: "Feb 1, 08:04" },
-  { from: "SHELL01", to: "MULE03", amount: 1880000, date: "Feb 1, 08:09" },
-  { from: "SHELL01", to: "MULE04", amount: 1850000, date: "Feb 1, 08:13" },
-  { from: "MULE01", to: "PROXY01", amount: 1930000, date: "Feb 1, 11:20" },
-  { from: "MULE02", to: "PROXY01", amount: 1900000, date: "Feb 1, 11:25" },
-  { from: "MULE03", to: "PROXY02", amount: 1860000, date: "Feb 1, 11:31" },
-  { from: "MULE04", to: "PROXY02", amount: 1830000, date: "Feb 1, 11:38" },
-  { from: "PROXY01", to: "SHELL02", amount: 3790000, date: "Feb 2, 09:00" },
-  { from: "PROXY02", to: "SHELL02", amount: 3650000, date: "Feb 2, 09:05" },
-  { from: "SHELL02", to: "SHELL03", amount: 7200000, date: "Feb 3, 10:00" },
-  { from: "SHELL03", to: "SHELL01", amount: 6950000, date: "Feb 4, 10:00" },
-  { from: "SHELL03", to: "EXIT01", amount: 180000, date: "Feb 4, 10:45" },
+  { from: "A123", to: "B456", amount: 980000,  date: "Jan 3, 09:12" },
+  { from: "B456", to: "C789", amount: 960000,  date: "Jan 3, 11:40" },
+  { from: "C789", to: "D012", amount: 945000,  date: "Jan 4, 08:05" },
+  { from: "D012", to: "A123", amount: 920000,  date: "Jan 4, 14:22" },
+  { from: "A123", to: "E345", amount: 450000,  date: "Jan 5, 10:00" },
+  { from: "E345", to: "F678", amount: 225000,  date: "Jan 5, 10:14" },
+  { from: "E345", to: "G901", amount: 220000,  date: "Jan 5, 10:18" },
+  { from: "F678", to: "C789", amount: 210000,  date: "Jan 6, 09:30" },
+  { from: "G901", to: "C789", amount: 205000,  date: "Jan 6, 09:33" },
 ]
 
 export const cycles: Cycle[] = [
   {
     id: "cycle-1",
-    path: ["SHELL01", "MULE01", "PROXY01", "SHELL02", "SHELL03", "SHELL01"],
-    volume: 16620000,
-    type: "Shell Cycling Loop",
+    path: ["A123", "B456", "C789", "D012", "A123"],
+    volume: 3805000,
+    type: "Simple Loop",
     risk: "CRITICAL",
   },
   {
     id: "cycle-2",
-    path: ["SHELL01", "MULE02", "PROXY01", "SHELL02", "SHELL03", "SHELL01"],
-    volume: 16590000,
-    type: "Shell Cycling Loop",
-    risk: "CRITICAL",
+    path: ["A123", "E345", "F678", "C789", "D012", "A123"],
+    volume: 2310000,
+    type: "Smurf Feedback Loop",
+    risk: "HIGH",
   },
   {
     id: "cycle-3",
-    path: ["SHELL01", "MULE03", "PROXY02", "SHELL02", "SHELL03", "SHELL01"],
-    volume: 16540000,
-    type: "Shell Cycling Loop",
-    risk: "CRITICAL",
-  },
-  {
-    id: "cycle-4",
-    path: ["SHELL01", "MULE04", "PROXY02", "SHELL02", "SHELL03", "SHELL01"],
-    volume: 16480000,
-    type: "Shell Cycling Loop",
-    risk: "CRITICAL",
+    path: ["A123", "E345", "G901", "C789", "D012", "A123"],
+    volume: 2300000,
+    type: "Smurf Feedback Loop",
+    risk: "HIGH",
   },
 ]
 
@@ -169,56 +133,56 @@ export const complianceAlerts: ComplianceAlert[] = [
   {
     id: "alert-1",
     code: "PMLA",
-    title: "Circular shell-cycling flow exceeds threshold",
+    title: "Circular flow exceeds PMLA reporting threshold",
     description:
-      "Four overlapping round-trip loops funnel funds SHELL01 → mules → proxies → SHELL02 → SHELL03 → SHELL01, recirculating over ₹6.6 crore per loop. Breaches PMLA 2002. STR to FIU-IND required.",
+      "A123 initiates a round-trip loop through B456, C789, D012 and back to A123, recirculating over ₹38L. Breaches PMLA 2002. STR to FIU-IND required.",
     severity: "CRITICAL",
-    account: "SHELL01",
+    account: "A123",
   },
   {
     id: "alert-2",
-    code: "KYC",
-    title: "Shell company cluster identified",
+    code: "STR",
+    title: "Smurfing detected at A123",
     description:
-      "SHELL01, SHELL02 and SHELL03 exhibit shell-company traits — no operating balance, near-instant pass-through, and a closed return leg (SHELL03 → SHELL01).",
+      "A123 split ₹4.5L into two sub-₹10L transfers to E345 within 18 minutes on Jan 5 (10:00, 10:14, 10:18). Classic structuring to avoid CTR threshold.",
     severity: "CRITICAL",
-    account: "SHELL03",
+    account: "A123",
   },
   {
     id: "alert-3",
     code: "STR",
-    title: "Fan-out distribution from controller",
+    title: "Dual smurf feedback loops via E345",
     description:
-      "SHELL01 disbursed ₹76.0L across four mule accounts within 13 minutes (₹18.5L–₹19.5L each). Coordinated fan-out / layering signature.",
+      "E345 received ₹4.5L from A123 and split into F678 (₹2.25L) and G901 (₹2.20L) within 18 minutes. Both legs feed back into C789, forming two parallel feedback loops.",
     severity: "HIGH",
-    account: "SHELL01",
+    account: "E345",
   },
   {
     id: "alert-4",
-    code: "STR",
-    title: "Zero-retention mule behavior",
+    code: "KYC",
+    title: "C789 convergence hub — dual feed receiver",
     description:
-      "MULE01–MULE04 each forwarded ~99% of received value to a proxy within hours, retaining negligible balance. Classic money-mule pass-through.",
+      "C789 receives funds from three separate paths: B456, F678, and G901. Acts as a convergence hub masking the original source of funds.",
     severity: "HIGH",
-    account: "MULE01",
+    account: "C789",
   },
   {
     id: "alert-5",
     code: "STR",
-    title: "Proxy re-convergence hub",
+    title: "Zero-retention mule behavior at F678 and G901",
     description:
-      "PROXY01 and PROXY02 each aggregate two mule legs before re-injecting funds into SHELL02, masking the original distribution. Layering assist.",
+      "F678 and G901 each forwarded nearly 100% of received value to C789 within hours of receipt. Classic money-mule pass-through with negligible balance retention.",
     severity: "MEDIUM",
-    account: "PROXY01",
+    account: "F678",
   },
   {
     id: "alert-6",
     code: "KYC",
-    title: "Suspected final beneficiary",
+    title: "D012 return leg — round-trip completer",
     description:
-      "EXIT01 received a ₹1.8L cash-out leg from SHELL03 outside the recirculation loop. Likely final beneficiary — verify identity and source of funds.",
+      "D012 received ₹9.45L from C789 and returned ₹9.20L to A123 the same day, completing the round-trip loop. Verify identity and source of funds.",
     severity: "MEDIUM",
-    account: "EXIT01",
+    account: "D012",
   },
 ]
 
@@ -270,7 +234,6 @@ export function txFor(id: string): { incoming: Transaction[]; outgoing: Transact
   }
 }
 
-/** Build adjacency list for traversal algorithms. */
 export function adjacency(): Record<string, string[]> {
   const adj: Record<string, string[]> = {}
   for (const a of accounts) adj[a.id] = []
@@ -278,7 +241,6 @@ export function adjacency(): Record<string, string[]> {
   return adj
 }
 
-/** BFS layering — returns ordered list of nodes by discovery + depth map. */
 export function bfsOrder(seed: string): { order: string[]; depth: Record<string, number> } {
   const adj = adjacency()
   const depth: Record<string, number> = { [seed]: 0 }
@@ -297,7 +259,6 @@ export function bfsOrder(seed: string): { order: string[]; depth: Record<string,
   return { order, depth }
 }
 
-/** DFS — returns the first traversal order discovered from seed. */
 export function dfsOrder(seed: string): string[] {
   const adj = adjacency()
   const visited = new Set<string>()
@@ -314,7 +275,6 @@ export function dfsOrder(seed: string): string[] {
   return order
 }
 
-/** Longest simple suspicious path from a seed (used for the path tracer). */
 export function longestPath(seed: string): string[] {
   const adj = adjacency()
   let best: string[] = [seed]
@@ -334,10 +294,10 @@ export function longestPath(seed: string): string[] {
 
 export function detectPattern(path: string[]): string {
   if (path.length >= 2 && path[0] === path[path.length - 1]) return "Round-trip"
-  const hasMule = path.some((id) => id.startsWith("MULE"))
-  const hasProxy = path.some((id) => id.startsWith("PROXY"))
+  const hasMule = path.some((id) => id.startsWith("E") || id.startsWith("F") || id.startsWith("G"))
+  const hasProxy = path.some((id) => id.startsWith("B") || id.startsWith("C") || id.startsWith("D"))
   if (hasMule && hasProxy) return "Layering"
-  if (hasMule) return "Fan-out"
+  if (hasMule) return "Smurfing"
   return "Layering"
 }
 
@@ -350,10 +310,6 @@ export function pathVolume(path: string[]): number {
   return total
 }
 
-/**
- * Branch & Bound investigation planner: greedily select up to `budget`
- * accounts that maximize fraud exposure (risk-weighted volume coverage).
- */
 export interface PlanStep {
   account: string
   marginalExposure: number
@@ -365,14 +321,12 @@ export function investigationPlan(budget: number): {
   exposure: number
   yieldScore: number
 } {
-  // exposure contribution per account = volume routed through it
   const routed: Record<string, number> = {}
   for (const a of accounts) routed[a.id] = 0
   for (const t of transactions) {
     routed[t.from] += t.amount
     routed[t.to] += t.amount
   }
-  // weight by risk score, branch & bound prunes low-yield leaves
   const ranked = [...accounts].sort(
     (a, b) => routed[b.id] * b.riskScore - routed[a.id] * a.riskScore,
   )
